@@ -17,6 +17,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='productfile',
             name='file',
-            field=models.FileField(storage=storages.backends.s3boto3.S3Boto3Storage(location='protected'), upload_to=products.models.upload_product_file_loc),
+            field=models.FileField(
+                storage=storages.backends.s3boto3.S3Boto3Storage(
+                    location='protected'),
+                upload_to=products.models.upload_product_file_loc),
         ),
     ]

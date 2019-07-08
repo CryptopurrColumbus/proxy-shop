@@ -7,6 +7,7 @@ class AddressForm(forms.ModelForm):
     """
     User-related CRUD form
     """
+
     class Meta:
         model = Address
         fields = [
@@ -23,12 +24,11 @@ class AddressForm(forms.ModelForm):
         ]
 
 
-
-
 class AddressCheckoutForm(forms.ModelForm):
     """
     User-related checkout address create form
     """
+
     class Meta:
         model = Address
         fields = [
@@ -43,4 +43,3 @@ class AddressCheckoutForm(forms.ModelForm):
             'state',
             'postal_code'
         ]
-

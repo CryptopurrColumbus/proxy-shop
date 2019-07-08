@@ -27,8 +27,8 @@ class UserManager(BaseUserManager):
             raise ValueError("Users must have an email address")
         if not password:
             raise ValueError("Users must have a password")
-        user_obj = self.model(
-            email=self.normalize_email(email), full_name=full_name)
+        user_obj = self.model(email=self.normalize_email(email),
+                              full_name=full_name)
         user_obj.set_password(password)  # change user password
         user_obj.staff = is_staff
         user_obj.admin = is_admin
@@ -37,17 +37,18 @@ class UserManager(BaseUserManager):
         return user_obj
 
     def create_staffuser(self, email, full_name=None, password=None):
-        user = self.create_user(
-            email, full_name=full_name, password=password, is_staff=True)
+        user = self.create_user(email,
+                                full_name=full_name,
+                                password=password,
+                                is_staff=True)
         return user
 
     def create_superuser(self, email, full_name=None, password=None):
-        user = self.create_user(
-            email,
-            full_name=full_name,
-            password=password,
-            is_staff=True,
-            is_admin=True)
+        user = self.create_user(email,
+                                full_name=full_name,
+                                password=password,
+                                is_staff=True,
+                                is_admin=True)
         return user
 
 
@@ -105,9 +106,8 @@ class EmailActivationQuerySet(models.query.QuerySet):
         start_range = now - timedelta(days=DEFAULT_ACTIVATION_DAYS)
         # does my object have a timestamp in here
         end_range = now
-        return self.filter(
-            activated=False, forced_expired=False).filter(
-                timestamp__gt=start_range, timestamp__lte=end_range)
+        return self.filter(activated=False, forced_expired=False).filter(
+            timestamp__gt=start_range, timestamp__lte=end_range)
 
 
 class EmailActivationManager(models.Manager):
@@ -168,9 +168,8 @@ class EmailActivation(models.Model):
             if self.key:
                 base_url = getattr(settings, 'BASE_URL',
                                    'https://www.pythonecommerce.com')
-                key_path = reverse(
-                    "account:email-activate", kwargs={'key':
-                                                      self.key})  # use reverse
+                key_path = reverse("account:email-activate",
+                                   kwargs={'key': self.key})  # use reverse
                 path = "{base}{path}".format(base=base_url, path=key_path)
                 context = {'path': path, 'email': self.email}
                 txt_ = get_template("registration/emails/verify.txt").render(
@@ -208,8 +207,8 @@ pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 
 def post_save_user_create_reciever(sender, instance, created, *args, **kwargs):
     if created:
-        obj = EmailActivation.objects.create(
-            user=instance, email=instance.email)
+        obj = EmailActivation.objects.create(user=instance,
+                                             email=instance.email)
         obj.send_activation()
 
 

@@ -31,17 +31,19 @@ class ProductFeaturedDetailView(ObjectViewedMixin, DetailView):
 
 class UserProductHistoryView(LoginRequiredMixin, ListView):
     template_name = "products/user-history.html"
+
     def get_context_data(self, *args, **kwargs):
-        context = super(UserProductHistoryView, self).get_context_data(*args, **kwargs)
+        context = super(UserProductHistoryView,
+                        self).get_context_data(*args, **kwargs)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
 
     def get_queryset(self, *args, **kwargs):
         request = self.request
-        views = request.user.objectviewed_set.by_model(Product, model_queryset=False)
+        views = request.user.objectviewed_set.by_model(Product,
+                                                       model_queryset=False)
         return views
-
 
 
 class ProductListView(ListView):
@@ -53,7 +55,8 @@ class ProductListView(ListView):
     #     return context
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ProductListView, self).get_context_data(*args, **kwargs)
+        context = super(ProductListView,
+                        self).get_context_data(*args, **kwargs)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
@@ -65,11 +68,8 @@ class ProductListView(ListView):
 
 def product_list_view(request):
     queryset = Product.objects.all()
-    context = {
-        'object_list': queryset
-    }
+    context = {'object_list': queryset}
     return render(request, "products/list.html", context)
-
 
 
 class ProductDetailSlugView(ObjectViewedMixin, DetailView):
@@ -77,7 +77,8 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
     template_name = "products/detail.html"
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
+        context = super(ProductDetailSlugView,
+                        self).get_context_data(*args, **kwargs)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
@@ -98,12 +99,14 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
             raise Http404("Uhhmmm ")
         return instance
 
+
 import os
-from wsgiref.util import FileWrapper # this used in django
+from wsgiref.util import FileWrapper  # this used in django
 from mimetypes import guess_type
 
 from django.conf import settings
 from orders.models import ProductPurchase
+
 
 class ProductDownloadView(View):
     def get(self, request, *args, **kwargs):
@@ -114,9 +117,9 @@ class ProductDownloadView(View):
             raise Http404("Download not found")
         download_obj = downloads_qs.first()
         # permission checks
-        
+
         can_download = False
-        user_ready  = True
+        user_ready = True
         if download_obj.user_required:
             if not request.user.is_authenticated():
                 user_ready = False
@@ -127,11 +130,13 @@ class ProductDownloadView(View):
             user_ready = True
         else:
             # not free
-            purchased_products = ProductPurchase.objects.products_by_request(request)
+            purchased_products = ProductPurchase.objects.products_by_request(
+                request)
             if download_obj.product in purchased_products:
                 can_download = True
         if not can_download or not user_ready:
-            messages.error(request, "You do not have access to download this item")
+            messages.error(request,
+                           "You do not have access to download this item")
             return redirect(download_obj.get_default_url())
 
         aws_filepath = download_obj.generate_download_url()
@@ -153,14 +158,13 @@ class ProductDownloadView(View):
         #return redirect(download_obj.get_default_url())
 
 
-
-
 class ProductDetailView(ObjectViewedMixin, DetailView):
     #queryset = Product.objects.all()
     template_name = "products/detail.html"
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+        context = super(ProductDetailView,
+                        self).get_context_data(*args, **kwargs)
         print(context)
         # context['abc'] = 123
         return context
@@ -202,7 +206,5 @@ def product_detail_view(request, pk=None, *args, **kwargs):
     # else:
     #     raise Http404("Product doesn't exist")
 
-    context = {
-        'object': instance
-    }
+    context = {'object': instance}
     return render(request, "products/detail.html", context)

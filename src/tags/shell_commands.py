@@ -29,14 +29,11 @@ returns the first instance, if any
 """
 
 exit()
-
 '''
 # Shell session 2
 # python manage.ppy shell
 '''
 from products.models import Product
-
-
 
 qs = Product.objects.all()
 print(qs)
@@ -66,11 +63,3 @@ Returns an actual Queryset of the Tag model related to this product
 <QuerySet [<Tag: T shirt>, <Tag: TShirt>, <Tag: T-shirt>, <Tag: Red>, <Tag: Black>]>
 '''
 tshirt.tag_set.filter(title__icontains='black')
-
-
-
-
-
-
-
-

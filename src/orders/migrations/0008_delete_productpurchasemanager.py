@@ -12,7 +12,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='ProductPurchaseManager',
-        ),
+        migrations.DeleteModel(name='ProductPurchaseManager', ),
     ]

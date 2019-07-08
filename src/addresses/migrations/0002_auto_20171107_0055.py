@@ -15,16 +15,24 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='address',
             name='name',
-            field=models.CharField(blank=True, help_text='Shipping to? Who is it for?', max_length=120, null=True),
+            field=models.CharField(blank=True,
+                                   help_text='Shipping to? Who is it for?',
+                                   max_length=120,
+                                   null=True),
         ),
         migrations.AddField(
             model_name='address',
             name='nickname',
-            field=models.CharField(blank=True, help_text='Internal Reference Nickname', max_length=120, null=True),
+            field=models.CharField(blank=True,
+                                   help_text='Internal Reference Nickname',
+                                   max_length=120,
+                                   null=True),
         ),
         migrations.AlterField(
             model_name='address',
             name='address_type',
-            field=models.CharField(choices=[('billing', 'Billing address'), ('shipping', 'Shipping address')], max_length=120),
+            field=models.CharField(choices=[('billing', 'Billing address'),
+                                            ('shipping', 'Shipping address')],
+                                   max_length=120),
         ),
     ]

@@ -5,8 +5,8 @@ from django.db.models.signals import pre_save, post_save, m2m_changed
 
 from products.models import Product
 
-
 User = settings.AUTH_USER_MODEL
+
 
 class CartManager(models.Manager):
     def new_or_get(self, request):
@@ -31,13 +31,16 @@ class CartManager(models.Manager):
                 user_obj = user
         return self.model.objects.create(user=user_obj)
 
+
 class Cart(models.Model):
-    user        = models.ForeignKey(User, null=True, blank=True)
-    products    = models.ManyToManyField(Product, blank=True)
-    subtotal    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    total       = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    updated     = models.DateTimeField(auto_now=True)
-    timestamp   = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, null=True, blank=True)
+    products = models.ManyToManyField(Product, blank=True)
+    subtotal = models.DecimalField(default=0.00,
+                                   max_digits=100,
+                                   decimal_places=2)
+    total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = CartManager()
 
@@ -46,13 +49,12 @@ class Cart(models.Model):
 
     @property
     def is_digital(self):
-        qs = self.products.all() #every product
-        new_qs = qs.filter(is_digital=False) # every product that is not digial
+        qs = self.products.all()  #every product
+        new_qs = qs.filter(
+            is_digital=False)  # every product that is not digial
         if new_qs.exists():
             return False
         return True
-
-
 
 
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
@@ -65,28 +67,15 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
             instance.subtotal = total
             instance.save()
 
+
 m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
-
-
 
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.subtotal > 0:
-        instance.total = Decimal(instance.subtotal) * Decimal(1.08) # 8% tax
+        instance.total = Decimal(instance.subtotal) * Decimal(1.08)  # 8% tax
     else:
         instance.total = 0.00
 
+
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
-
-
-
-
-
-
-
-
-
-
-
-
-

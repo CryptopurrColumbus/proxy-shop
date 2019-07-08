@@ -10,11 +10,11 @@ from .models import EmailActivation, GuestEmail
 
 
 class ReactivateEmailForm(forms.Form):
-    email       = forms.EmailField()
+    email = forms.EmailField()
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        qs = EmailActivation.objects.email_exists(email) 
+        qs = EmailActivation.objects.email_exists(email)
         if not qs.exists():
             register_link = reverse("register")
             msg = """This email does not exists, would you like to <a href="{link}">register</a>?
@@ -27,11 +27,15 @@ class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation',
+                                widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ('full_name', 'email',) #'full_name',)
+        fields = (
+            'full_name',
+            'email',
+        )  #'full_name',)
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -50,14 +54,15 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
-
 class UserDetailChangeForm(forms.ModelForm):
-    full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class": 'form-control'}))
+    full_name = forms.CharField(
+        label='Name',
+        required=False,
+        widget=forms.TextInput(attrs={"class": 'form-control'}))
 
     class Meta:
         model = User
         fields = ['full_name']
-
 
 
 class UserAdminChangeForm(forms.ModelForm):
@@ -78,14 +83,11 @@ class UserAdminChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
-
 class GuestForm(forms.ModelForm):
     #email    = forms.EmailField()
     class Meta:
         model = GuestEmail
-        fields = [
-            'email'
-        ]
+        fields = ['email']
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -101,9 +103,8 @@ class GuestForm(forms.ModelForm):
         return obj
 
 
-
 class LoginForm(forms.Form):
-    email    = forms.EmailField(label='Email')
+    email = forms.EmailField(label='Email')
     password = forms.CharField(widget=forms.PasswordInput)
 
     def __init__(self, request, *args, **kwargs):
@@ -113,8 +114,8 @@ class LoginForm(forms.Form):
     def clean(self):
         request = self.request
         data = self.cleaned_data
-        email  = data.get("email")
-        password  = data.get("password")
+        email = data.get("email")
+        password = data.get("password")
         qs = User.objects.filter(email=email)
         if qs.exists():
             # user email is registered, check active/
@@ -124,13 +125,15 @@ class LoginForm(forms.Form):
                 link = reverse("account:resend-activation")
                 reconfirm_msg = """Go to <a href='{resend_link}'>
                 resend confirmation email</a>.
-                """.format(resend_link = link)
+                """.format(resend_link=link)
                 confirm_email = EmailActivation.objects.filter(email=email)
                 is_confirmable = confirm_email.confirmable().exists()
                 if is_confirmable:
-                    msg1 = "Please check your email to confirm your account or " + reconfirm_msg.lower()
+                    msg1 = "Please check your email to confirm your account or " + reconfirm_msg.lower(
+                    )
                     raise forms.ValidationError(mark_safe(msg1))
-                email_confirm_exists = EmailActivation.objects.email_exists(email).exists()
+                email_confirm_exists = EmailActivation.objects.email_exists(
+                    email).exists()
                 if email_confirm_exists:
                     msg2 = "Email not confirmed. " + reconfirm_msg
                     raise forms.ValidationError(mark_safe(msg2))
@@ -150,7 +153,7 @@ class LoginForm(forms.Form):
     #     redirect_path = next_ or next_post or None
     #     email  = form.cleaned_data.get("email")
     #     password  = form.cleaned_data.get("password")
-        
+
     #     print(user)
     #     if user is not None:
     #         if not user.is_active:
@@ -174,11 +177,15 @@ class RegisterForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation',
+                                widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ('full_name', 'email',) #'full_name',)
+        fields = (
+            'full_name',
+            'email',
+        )  #'full_name',)
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -192,12 +199,9 @@ class RegisterForm(forms.ModelForm):
         # Save the provided password in hashed format
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        user.is_active = False # send confirmation email via signals
+        user.is_active = False  # send confirmation email via signals
         # obj = EmailActivation.objects.create(user=user)
         # obj.send_activation_email()
         if commit:
             user.save()
         return user
-
-
-

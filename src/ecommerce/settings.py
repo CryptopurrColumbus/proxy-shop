@@ -18,9 +18,8 @@ BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 root = environ.Path(__file__)
-env = environ.Env(DEBUG=(bool, True),)
+env = environ.Env(DEBUG=(bool, True), )
 environ.Env.read_env()
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -35,11 +34,12 @@ EMAIL_HOST_USER = 'hungrypy@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = env('FROM_EMAIL', default='Proxy Panel <vivekanand1101@gmail.com>')
-
+DEFAULT_FROM_EMAIL = env('FROM_EMAIL',
+                         default='Proxy Panel <vivekanand1101@gmail.com>')
 
 BASE_URL = env('BASE_URL', default='http://localhost:8001')
-MANAGERS = env('MANAGERS', default=(('Vivek Anand', 'vivekanand1101+proxy@gmail.com'),))
+MANAGERS = env('MANAGERS',
+               default=(('Vivek Anand', 'vivekanand1101+proxy@gmail.com'), ))
 ADMINS = MANAGERS
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -176,15 +176,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_my_proj"),
 ]
 
-STATIC_ROOT = os.path.join(
-    os.path.dirname(BASE_DIR), "static_cdn", "static_root")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn",
+                           "static_root")
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(
-    os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn",
+                          "media_root")
 
-PROTECTED_ROOT = os.path.join(
-    os.path.dirname(BASE_DIR), "static_cdn", "protected_media")
+PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn",
+                              "protected_media")
 
 from ecommerce.aws.conf import *
 

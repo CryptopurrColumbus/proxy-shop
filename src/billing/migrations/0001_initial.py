@@ -19,12 +19,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BillingProfile',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id',
+                 models.AutoField(auto_created=True,
+                                  primary_key=True,
+                                  serialize=False,
+                                  verbose_name='ID')),
                 ('email', models.EmailField(max_length=254)),
                 ('active', models.BooleanField(default=True)),
                 ('update', models.DateTimeField(auto_now=True)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, unique=True)),
+                ('user',
+                 models.ForeignKey(blank=True,
+                                   null=True,
+                                   on_delete=django.db.models.deletion.CASCADE,
+                                   to=settings.AUTH_USER_MODEL,
+                                   unique=True)),
             ],
         ),
     ]
