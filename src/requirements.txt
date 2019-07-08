@@ -27,4 +27,4 @@ smmap2==2.0.3
 stripe==1.68.0
 urllib3>=1.23
 wheel==0.30.0
-environ
+django-environ==0.4.1
