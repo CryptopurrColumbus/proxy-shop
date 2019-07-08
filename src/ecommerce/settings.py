@@ -43,7 +43,7 @@ ADMINS = MANAGERS
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.pythonecommerce.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
