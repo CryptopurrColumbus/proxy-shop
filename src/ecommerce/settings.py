@@ -29,6 +29,7 @@ environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY', default='lolwa')
 
 # Email
+SEND_EMAIL = env.bool('SEND_EMAIL', default=False)
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'hungrypy@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

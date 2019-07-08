@@ -1,39 +1,33 @@
-from django.contrib.auth import authenticate, login, get_user_model
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
 from django.views.generic.edit import FormMixin
-from django.http import HttpResponse
-from django.shortcuts import render,redirect
-from django.utils.http import is_safe_url
+from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 from .forms import LoginForm, RegisterForm, GuestForm, ReactivateEmailForm, UserDetailChangeForm
-from .models import GuestEmail, EmailActivation
-from .signals import user_logged_in
-
+from .models import EmailActivation
 
 # @login_required # /accounts/login/?next=/some/path/
 # def account_home_view(request):
 #     return render(request, "accounts/home.html", {})
 
 
-#LoginRequiredMixin,
+# LoginRequiredMixin,
 class AccountHomeView(LoginRequiredMixin, DetailView):
     template_name = 'accounts/home.html'
+
     def get_object(self):
         return self.request.user
-
 
 
 class AccountEmailActivateView(FormMixin, View):
     success_url = '/login/'
     form_class = ReactivateEmailForm
     key = None
+
     def get(self, request, key=None, *args, **kwargs):
         self.key = key
         if key is not None:
@@ -42,7 +36,8 @@ class AccountEmailActivateView(FormMixin, View):
             if confirm_qs.count() == 1:
                 obj = confirm_qs.first()
                 obj.activate()
-                messages.success(request, "Your email has been confirmed. Please login.")
+                messages.success(
+                    request, "Your email has been confirmed. Please login.")
                 return redirect("login")
             else:
                 activated_qs = qs.filter(activated=True)
@@ -52,8 +47,8 @@ class AccountEmailActivateView(FormMixin, View):
                     Do you need to <a href="{link}">reset your password</a>?
                     """.format(link=reset_link)
                     messages.success(request, mark_safe(msg))
-                    return redirect("login") 
-        context = {'form': self.get_form(),'key': key}
+                    return redirect("login")
+        context = {'form': self.get_form(), 'key': key}
         return render(request, 'registration/activation-error.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -70,17 +65,18 @@ class AccountEmailActivateView(FormMixin, View):
         messages.success(request, msg)
         email = form.cleaned_data.get("email")
         obj = EmailActivation.objects.email_exists(email).first()
-        user = obj.user 
+        user = obj.user
         new_activation = EmailActivation.objects.create(user=user, email=email)
         new_activation.send_activation()
         return super(AccountEmailActivateView, self).form_valid(form)
 
     def form_invalid(self, form):
-        context = {'form': form, "key": self.key }
-        return render(self.request, 'registration/activation-error.html', context)
+        context = {'form': form, "key": self.key}
+        return render(self.request, 'registration/activation-error.html',
+                      context)
 
 
-class GuestRegisterView(NextUrlMixin,  RequestFormAttachMixin, CreateView):
+class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
     form_class = GuestForm
     default_next = '/register/'
 
@@ -102,14 +98,10 @@ class LoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
         return redirect(next_path)
 
 
-
-
 class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'accounts/register.html'
     success_url = '/login/'
-
-
 
 
 class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
@@ -120,7 +112,8 @@ class UserDetailUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def get_context_data(self, *args, **kwargs):
-        context = super(UserDetailUpdateView, self).get_context_data(*args, **kwargs)
+        context = super(UserDetailUpdateView, self).get_context_data(
+            *args, **kwargs)
         context['title'] = 'Change Your Account Details'
         return context
 
