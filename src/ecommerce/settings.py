@@ -26,22 +26,23 @@ environ.Env.read_env()
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY') or 'eb'
+SECRET_KEY = env('SECRET_KEY', default='lolwa')
 
+# Email
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'hungrypy@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <hungrypy@gmail.com>'
-BASE_URL = 'https://www.pythonecommerce.com/'
+DEFAULT_FROM_EMAIL = env('FROM_EMAIL', default='Proxy Panel <vivekanand1101@gmail.com>')
 
-MANAGERS = (('Justin Mitchel', "hungrypy@gmail.com"), )
 
+BASE_URL = env('BASE_URL', default='http://localhost:8001')
+MANAGERS = env('MANAGERS', default=(('Vivek Anand', 'vivekanand1101+proxy@gmail.com'),))
 ADMINS = MANAGERS
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env('DEBUG', default=True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -103,7 +104,7 @@ ROOT_URLCONF = 'ecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'src', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -190,12 +191,12 @@ from ecommerce.aws.conf import *
 
 # Let's Encrypt ssl/tls https
 
-CORS_REPLACE_HTTPS_REFERER = True
-HOST_SCHEME = "https://"
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 1000000
-SECURE_FRAME_DENY = True
+# CORS_REPLACE_HTTPS_REFERER = True
+# HOST_SCHEME = "https://"
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_SECONDS = 1000000
+# SECURE_FRAME_DENY = True
