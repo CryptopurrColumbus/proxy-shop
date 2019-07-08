@@ -1,6 +1,7 @@
 .DS_STORE
 
 .env
+.sqlite3
 notes/email-activation.py
 src/ecommerce/aws/ignore2.py
 
