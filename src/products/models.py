@@ -28,9 +28,6 @@ class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
 
-    def featured(self):
-        return self.filter(featured=True, active=True)
-
     def search(self, query):
         lookups = (Q(title__icontains=query) | Q(description__icontains=query)
                    | Q(price__icontains=query)
@@ -44,9 +41,6 @@ class ProductManager(models.Manager):
 
     def all(self):
         return self.get_queryset().active()
-
-    def featured(self):
-        return self.get_queryset().featured()
 
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)
@@ -65,10 +59,9 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
     image = models.ImageField(
         upload_to=upload_image_path, null=True, blank=True)
-    featured = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    is_digital = models.BooleanField(default=False)
+    bandwidth = models.IntegerField(default=1)
 
     objects = ProductManager()
 

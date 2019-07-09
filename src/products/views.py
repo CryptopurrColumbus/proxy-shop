@@ -17,7 +17,7 @@ class ProductFeaturedListView(ListView):
 
 
 class ProductFeaturedDetailView(ObjectViewedMixin, DetailView):
-    queryset = Product.objects.all().featured()
+    queryset = Product.objects.all()
     template_name = "products/featured-detail.html"
 
 
