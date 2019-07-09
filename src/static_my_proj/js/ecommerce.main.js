@@ -137,6 +137,7 @@ form.on('submit', function(event) {
                             currentTimeout
                         )
 
+      console.log("140: ", nextUrl)
       stripeTokenHandler(nextUrl, result.token);
 
     }
