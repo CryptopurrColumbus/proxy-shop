@@ -175,7 +175,6 @@ function redirectToNext(nextPath, timeoffset) {
 }
 
 function stripeTokenHandler(nextUrl, token){
-    // console.log(token.id)
     var paymentMethodEndpoint = '/billing/payment-method/create/'
     var data = {
         'token': token.id

@@ -29,9 +29,10 @@ SECRET_KEY = env('SECRET_KEY', default='lolwa')
 
 # Email
 SEND_EMAIL = env.bool('SEND_EMAIL', default=False)
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'hungrypy@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', default='SG')
+EMAIL_HOST_API_KEY = os.environ.get('EMAIL_HOST_API_KEY', default='SG')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env('FROM_EMAIL',
@@ -85,9 +86,9 @@ MAILCHIMP_DATA_CENTER = "us17"
 MAILCHIMP_EMAIL_LIST_ID = os.environ.get("MAILCHIMP_EMAIL_LIST_ID")
 
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY",
-                                   "sk_test_cu1lQmcg1OLffhLvYrSCp5XE")
+                                   "sk_test")
 STRIPE_PUB_KEY = os.environ.get("STRIPE_PUB_KEY",
-                                'pk_test_PrV61avxnHaWIYZEeiYTTVMZ')
+                                'pk_test')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
