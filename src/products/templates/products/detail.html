@@ -3,20 +3,25 @@
 
 {% block content %}
 
-<div class = "container" >
-    <div class='row '>
-        <div class='col-12 col-md-6 m-4'>
+<div class = "container"   >
+    <div class='row justify-content-center' >
+        <div class='col-12 col-md-6 m-4 card-body bg-light'>
                 <h1 class= "jumbotron bg-danger text-center">{{object.bandwidth}} GB</h1>
-                <h1 class= "text-capitalize text-center">{{ object.title }} &nbsp; &nbsp; <span class= "text-capitalize text-center text-secondary small">$ {{ object.price }}</span></h1>
-                <!-- <h6 class= "text-capitalize text-center text-secondary">$ {{ object.price }}</h6> -->
+                <h1 class= "text-capitalize text-center">{{ object.title }}</h1>
+                <h6 class= "text-capitalize text-center">{{ object.description }}</h6>
+                <h6 class= "text-capitalize text-center text-secondary mb-4">$ {{ object.price }}</h6>
+                <div class='text-center'>
+         
+                        {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+                </div> 
+                
                 <hr class = "bg-dark ">
                 <!-- {{ object.timestamp|timesince }} ago -->
-                <!-- {{ object.description|linebreaks }}<br/> -->
                 {% if object.image %}
                     <img src='{{ object.image.url }}' class='img-fluid' />
                 {% endif %}
-               <h5> Proxy Server Locations</h5>
-            <ul class = "card-columns "> 
+               <h5 class="m-4"> Proxy Server Locations</h5>
+            <ul class = "card-columns justify-content-center mb-4 "> 
                 <li>Australia</li>
                 <li>Belgium</li>
                 <li>Brazil </li>
@@ -51,13 +56,13 @@
                 <li>US</li>
                 
             </ul>
-        </div>
-
-        <div class='col-12 col-md-6'>
-            {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+            <hr class="bg-dark">
+           
 
         </div>
-</div>
+
+       
+    </div>
 </div>
 
 

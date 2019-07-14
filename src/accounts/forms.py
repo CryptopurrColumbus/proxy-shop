@@ -26,9 +26,9 @@ class ReactivateEmailForm(forms.Form):
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={"class": 'form-control'}))
     password2 = forms.CharField(label='Password confirmation',
-                                widget=forms.PasswordInput)
+                                widget=forms.PasswordInput(attrs={"class": 'form-control'}))
 
     class Meta:
         model = User
@@ -105,7 +105,7 @@ class GuestForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Email')
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class": 'form-control'}))
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -176,9 +176,9 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={"class": 'form-control'}))
     password2 = forms.CharField(label='Password confirmation',
-                                widget=forms.PasswordInput)
+                                widget=forms.PasswordInput(attrs={"class": 'form-control'}))
 
     class Meta:
         model = User
