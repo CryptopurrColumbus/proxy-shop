@@ -3,20 +3,60 @@
 
 {% block content %}
 
-
-    <div class='row'>
-        <div class='col-12 col-md-6'>
-                <h1>{{ object.title }}</h1>
-                {{ object.timestamp|timesince }} ago
-                {{ object.description|linebreaks }}<br/>
+<div class = "container" >
+    <div class='row '>
+        <div class='col-12 col-md-6 m-4'>
+                <h1 class= "jumbotron bg-danger text-center">{{object.bandwidth}} GB</h1>
+                <h1 class= "text-capitalize text-center">{{ object.title }}</h1>
+                <hr class = "bg-dark ">
+                <!-- {{ object.timestamp|timesince }} ago -->
+                <!-- {{ object.description|linebreaks }}<br/> -->
                 {% if object.image %}
                     <img src='{{ object.image.url }}' class='img-fluid' />
                 {% endif %}
+               <h5> Proxy Server Locations</h5>
+            <ul class = "card-columns "> 
+                <li>Australia</li>
+                <li>Belgium</li>
+                <li>Brazil </li>
+                <li>Canada</li>
+                <li>China</li>
+                <li>Croatia</li>
+                <li>Denmark</li>
+                <li>Estonia</li>
+                <li>Finland </li>
+                <li>France</li>
+                <li>Germany</li>
+                <li>Greece</li>
+                <li>HongKong</li>
+                <li>India</li>
+                <li>Ireland</li>
+                <li>Israel</li>
+                <li>Italy</li>
+                <li>Japan</li>
+                <li>Latvia</li>
+                <li>Malaysia</li>
+                <li>Mexico</li>
+                <li>Netherlands</li>
+                <li>NewZealand</li>
+                <li>Norway</li>
+                <li>Poland</li>
+                <li>Portugal</li>
+                <li>Russia</li>
+                <li>South Korea</li>
+                <li>Spain</li>
+                <li>Sweden</li>
+                <li>UK</li>
+                <li>US</li>
+                
+            </ul>
         </div>
+
         <div class='col-12 col-md-6'>
             {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
 
         </div>
+</div>
 </div>
 
 

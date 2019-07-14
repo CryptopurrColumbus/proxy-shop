@@ -1,0 +1,7 @@
+2019-07-08 20:53:03.244 IST [99089] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-07-08 20:53:03.244 IST [99089] LOG:  listening on IPv6 address "::1", port 5432
+2019-07-08 20:53:03.247 IST [99089] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-07-08 20:53:03.282 IST [99090] LOG:  database system was shut down at 2019-07-08 20:45:37 IST
+2019-07-08 20:53:03.292 IST [99089] LOG:  database system is ready to accept connections
+2019-07-08 20:54:28.012 IST [99118] FATAL:  role "postgres" does not exist
+2019-07-08 20:55:24.652 IST [99126] FATAL:  role "postgres" does not exist
