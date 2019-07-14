@@ -113,6 +113,7 @@ form.on('submit', function(event) {
   var loadingHtml = "<i class='fa fa-spin fa-spinner'></i> Loading..."
   var loadingClasses = "btn btn-success disabled my-3"
 
+  console.log("coming in this shit");
   stripe.createToken(card).then(function(result) {
     if (result.error) {
       // Inform the user if there was an error
@@ -175,7 +176,7 @@ function redirectToNext(nextPath, timeoffset) {
 
 function stripeTokenHandler(nextUrl, token){
     // console.log(token.id)
-    var paymentMethodEndpoint = '/billing/payment-method/create/'
+    var paymentMethodEndpoint = '/billing/payment/create/'
     var data = {
         'token': token.id
     }

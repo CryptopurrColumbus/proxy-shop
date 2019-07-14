@@ -36,7 +36,7 @@ EMAIL_HOST_API_KEY = os.environ.get('EMAIL_HOST_API_KEY', default='SG')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env('FROM_EMAIL',
-                         default='Proxy Panel <vivekanand1101@gmail.com>')
+                         default='Proxy Panel <vivekanand1101+proxypanel@gmail.com>')
 
 BASE_URL = env('BASE_URL', default='http://localhost:8001')
 MANAGERS = env('MANAGERS',

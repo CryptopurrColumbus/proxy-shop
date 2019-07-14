@@ -70,7 +70,7 @@ urlpatterns = [
     url(r'^billing/payment-method/$',
         payment_method_view,
         name='billing-payment-method'),
-    url(r'^billing/payment-method/create/$',
+    url(r'^billing/payment/create/$',
         payment_method_createview,
         name='billing-payment-method-endpoint'),
     url(r'^register/$', RegisterView.as_view(), name='register'),
