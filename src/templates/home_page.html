@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
 
-<title>Home Page Template</title>
+<title>ROSI.HOST | homepage</title>
 
 {% block base_head %}
 <link rel='stylesheet' href='{% static "css/main.css" %}' >
 {% endblock %}
 
 {% block content %}
-<div class='text-center'>
-    <h1>{{ title }}</h1>
-    <h1>Hello, world we're working!</h1>
+<div class='text-center text-dark mb-4'>
+    <h1 >ROSI.HOST</h1>
+    <h4>The Best Proxy Service</h4>
+    <h6>The world is just a click away!</h6>
 </div>
 
 <div class='row'>
-  <div class='col'>
-      <img src="{% static 'img/beach.jpg' %}" class='img-fluid' />
-      <p>{{ content }}</p>
+  <div class='col text-center'>
+      <img src="{% static 'img/beach.jpg' %}" class='img-fluid mb-4' />
+      <!-- <p>{{ content }}</p> -->
+      <a href= "/products"><h4>Browse our plans now!!</h4></a>
   </div>
 </div>
 {% if request.user.is_authenticated %}
