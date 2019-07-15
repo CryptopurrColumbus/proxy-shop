@@ -49,11 +49,6 @@ class Cart(models.Model):
 
     @property
     def is_digital(self):
-        qs = self.products.all()  #every product
-        new_qs = qs.filter(
-            is_digital=False)  # every product that is not digial
-        if new_qs.exists():
-            return False
         return True
 
 

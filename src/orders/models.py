@@ -162,7 +162,7 @@ class Order(models.Model):
         return new_total
 
     def check_done(self):
-        shipping_address_required = not self.cart.is_digital
+        shipping_address_required = False
         shipping_done = False
         if shipping_address_required and self.shipping_address:
             shipping_done = True
@@ -242,7 +242,7 @@ class ProductPurchaseQuerySet(models.query.QuerySet):
         return self.filter(refunded=False)
 
     def digital(self):
-        return self.filter(product__is_digital=True)
+        return self.all()
 
     def by_request(self, request):
         billing_profile, created = BillingProfile.objects.new_or_get(request)
